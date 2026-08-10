@@ -1,0 +1,39 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main() {
+     int q;
+     cin>>q;
+     string target="hackerrank";
+     if(q>1){
+        while(q--){
+            string s;
+            cin>>s;
+          int target_ptr=0;
+    for(char c:s){
+    if(c==target[target_ptr]){
+    target_ptr++;
+    }}
+    if(target_ptr==target.length())
+    cout<<"YES\n";
+    else
+    cout<<"NO\n"; 
+     }}
+    else{
+        string s;
+     cin>>s;
+    int target_ptr=0;
+    for(char c:s){
+    if(c==target[target_ptr]){
+    target_ptr++;
+    }}
+    if(target_ptr==target.length())
+    cout<<"YES\n";
+    else
+    cout<<"NO\n";
+    }
+    return 0;
+}
