@@ -1,0 +1,30 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    long long i,j;
+    cin>>i>>j;  
+    long long start=min(i,j);
+    long long end=max(i,j);
+    long long maxLen=0;
+    for(long long n=start;n<=end;n++){
+    long long length=1;
+    long long x=n;
+    while(x!=1){
+    if(x%2==0)
+    x=x/2;
+    else
+    x=3*x+1;
+    length++;
+    }
+    if(length>maxLen)
+    maxLen=length;
+    }
+    cout<<i<<" "<<j<<" "<<maxLen;
+    return 0;
+}
