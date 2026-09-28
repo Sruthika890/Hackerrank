@@ -1,0 +1,81 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+using namespace std;
+
+struct Node
+{
+    Node* child[26];
+    bool end;
+
+    Node()
+    {
+        end = false;
+
+        for (int i = 0; i < 26; i++)
+            child[i] = NULL;
+    }
+};
+
+void insert(Node* root, string s)
+{
+    Node* curr = root;
+
+    for (char c : s)
+    {
+        int index = c - 'a';
+
+        if (curr->child[index] == NULL)
+            curr->child[index] = new Node();
+
+        curr = curr->child[index];
+    }
+
+    curr->end = true;
+}
+
+bool search(Node* root, string s)
+{
+    Node* curr = root;
+
+    for (char c : s)
+    {
+        int index = c - 'a';
+
+        if (curr->child[index] == NULL)
+            return false;
+
+        curr = curr->child[index];
+    }
+
+    return curr->end;
+}
+
+int main()
+{
+    int N;
+    cin >> N;
+
+    string line;
+    cin >> line;
+
+    Node* root = new Node();
+
+    // Split comma-separated strings
+    stringstream ss(line);
+    string word;
+
+    while (getline(ss, word, ','))
+    {
+        insert(root, word);
+    }
+
+    string searchWord;
+    cin >> searchWord;
+
+    if (search(root, searchWord))
+        cout << 1;
+    else
+    cout<<0;
+    return 0;
+}
