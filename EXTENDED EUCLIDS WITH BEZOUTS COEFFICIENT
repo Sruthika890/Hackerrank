@@ -1,0 +1,30 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int extended_gcd(int a,int b,int *x,int *y){
+    if(b==0)
+    {
+        *x=1;
+        *y=0;
+        return a;
+    }
+    int x1,y1;
+    int d=extended_gcd(b,a%b,&x1,&y1);
+    *x=y1;
+    *y=x1-y1*(a/b);
+    return d;
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */ 
+    int a,b;
+    cin>>a;
+    cin>>b;
+    int x,y;
+    int gcd=extended_gcd(a,b,&x,&y);  
+    cout<<x<<" "<<y<<" "<<gcd;
+    return 0;
+}
