@@ -1,0 +1,90 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+
+// Breadth-First Search to find an augmenting path in the residual graph
+bool bfs(int s, int t, int V, const vector<vector<long long>>& capacity, vector<int>& parent) {
+    fill(parent.begin(), parent.end(), -1);
+    parent[s] = -2;
+    
+    queue<pair<int, long long>> q;
+    q.push({s, 1e18}); // {current_node, bottleneck_capacity}
+
+    while (!q.empty()) {
+        int cur = q.front().first;
+        long long flow = q.front().second;
+        q.pop();
+
+        for (int next = 0; next < V; ++next) {
+            if (parent[next] == -1 && capacity[cur][next] > 0) {
+                parent[next] = cur;
+                long long new_flow = min(flow, capacity[cur][next]);
+                if (next == t) {
+                    return true;
+                }
+                q.push({next, new_flow});
+            }
+        }
+    }
+    return false;
+}
+
+int main() {
+    // Fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int V, E;
+    if (!(cin >> V >> E)) return 0;
+
+    // Residual capacity matrix
+    vector<vector<long long>> capacity(V, vector<long long>(V, 0));
+
+    for (int i = 0; i < E; ++i) {
+        int u, v;
+        long long cap;
+        cin >> u >> v >> cap;
+        // In case of parallel edges between same u and v, add capacities
+        capacity[u][v] += cap;
+    }
+
+    int source = 0;
+    int sink = V - 1;
+    
+    long long max_flow = 0;
+    vector<int> parent(V);
+
+    // Edmonds-Karp Algorithm
+    while (bfs(source, sink, V, capacity, parent)) {
+        // Find bottleneck capacity along the path found by BFS
+        long long path_flow = 1e18;
+        int curr = sink;
+        while (curr != source) {
+            int prev = parent[curr];
+            path_flow = min(path_flow, capacity[prev][curr]);
+            curr = prev;
+        }
+
+        // Update residual capacities of the edges and reverse edges
+        curr = sink;
+        while (curr != source) {
+            int prev = parent[curr];
+            capacity[prev][curr] -= path_flow;
+            capacity[curr][prev] += path_flow;
+            curr = prev;
+        }
+
+        max_flow += path_flow;
+    }
+
+    cout << max_flow << "\n";
+
+    return 0;
+}
+
+
+
+   
