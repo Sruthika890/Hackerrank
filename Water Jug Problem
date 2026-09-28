@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+long long gcd(long long a, long long b)
+{
+    while (b != 0)
+    {
+        long long r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+int main()
+{
+    long long A, B, T;
+
+    cin >> A >> B >> T;
+
+    if (T <= max(A, B) && T % gcd(A, B) == 0)
+        cout << "YES";
+    else
+        cout << "NO";
+
+    return 0;
+}
