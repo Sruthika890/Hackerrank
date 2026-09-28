@@ -1,0 +1,52 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    int n, m;
+    cin >> n >> m;
+
+    vector<vector<int>> a(n, vector<int>(m));
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> a[i][j];
+
+    int top = 0;
+    int bottom = n - 1;
+    int left = 0;
+    int right = m - 1;
+
+    while (top <= bottom && left <= right) {
+
+        // Left to Right
+        for (int j = left; j <= right; j++)
+            cout << a[top][j] << " ";
+        top++;
+
+        // Top to Bottom
+        for (int i = top; i <= bottom; i++)
+            cout << a[i][right] << " ";
+        right--;
+
+        // Right to Left
+        if (top <= bottom) {
+            for (int j = right; j >= left; j--)
+                cout << a[bottom][j] << " ";
+            bottom--;
+        }
+
+        // Bottom to Top
+        if (left <= right) {
+            for (int i = bottom; i >= top; i--)
+                cout << a[i][left] << " ";
+            left++;
+        }
+    }   
+    return 0;
+}
