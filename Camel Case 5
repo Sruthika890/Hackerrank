@@ -1,0 +1,50 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <string>
+#include <array>
+#include <iostream>
+#include <algorithm>
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+   int n;
+   cin>>n;
+   string line;
+   cin>>line;
+   string pattern;
+   cin>>pattern;
+   vector<string> words;
+   string word;
+   stringstream ss(line);
+   while(getline(ss,word,',')){
+    words.push_back(word);
+   }
+   vector<pair<string,string>> ans;
+   for(string w:words){
+    string abbr="";
+    for(char c:w){
+    if(isupper(c)){
+    abbr+=c;
+   }}
+   int j=0;
+   for(char c:abbr){
+   if(j<pattern.length()&& c==pattern[j])
+   j++;
+   }
+   if(j==pattern.length()){
+    ans.push_back({abbr,w});
+   }
+   }
+   sort(ans.begin(),ans.end());
+   if(ans.empty()){
+   cout<<"No match found";
+   }
+   else{
+   for(auto p:ans){
+   cout<<p.second<<endl;
+   }}
+    return 0;
+}
