@@ -1,0 +1,22 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    string s;
+    cin>>s;
+    int checker=0;
+    for(char ch:s){
+    int pos=ch-'a';
+    int mask=1<<pos;
+    if((checker&mask)>0)
+    cout<<ch<<" ";
+    else
+    checker|=mask;
+    }
+    return 0;
+}
